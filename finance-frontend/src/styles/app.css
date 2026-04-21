@@ -8,7 +8,7 @@
   --border: #e0e0e0;
 }
 
-.dark {
+body.dark {
   --bg: #121212;
   --card: #1e1e1e;
   --text: #ffffff;
@@ -30,7 +30,7 @@ body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
   color: var(--text);
-  background: var(--bg); /* <-- THIS WAS MISSING */
+  background: var(--bg); 
 }
 
 .container {
@@ -50,8 +50,11 @@ body {
   /* vertically center */
 }
 
+#header h1{
 
-#header .toggle {}
+  color:(var(--text))
+}
+
 
 .top {
   display: flex;
@@ -70,8 +73,6 @@ body {
   max-height: 350px;
   overflow-y: auto;
 
-
-
 }
 
 .text-view .card {
@@ -79,6 +80,7 @@ body {
   height: auto;
   font-size: 8px;
   width: 80%;
+  color:var(--text)
 
 
 }
@@ -86,12 +88,14 @@ body {
 .text-view .card h2 {
   margin: 0.5em;
   height: 20%;
+  color: var(--text)
 }
 
 .text-view .card h1 {
   margin: 1em;
   height: 20%;
   font-size: 24px;
+  color: var(--text)
 
 }
 
@@ -99,6 +103,11 @@ body {
   width: 80%;
   height: fit-content;
   padding: 2em;
+ 
+}
+
+#cashflow-card h2{
+   color: var(--text)
 }
 
 .bottom {
@@ -110,6 +119,7 @@ body {
 /* 💳 Cards */
 .card {
   background: var(--card);
+  color: var(--text);
   padding: 8px;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -155,7 +165,7 @@ button {
   border-radius: 6px;
   cursor: pointer;
   background: var(--primary);
-  color: white;
+  color: --text;
 }
 
 button.delete {
@@ -166,6 +176,7 @@ button.delete {
 .table {
   width: 100%;
   border-collapse: collapse;
+  color: var(--text);
 }
 
 .table th {
@@ -195,7 +206,7 @@ button.delete {
   padding: 8px 12px;
   border-radius: 8px;
   background: var(--primary);
-  color: white;
+  color: --text;
 
   margin-left: 1.5em;
 }
