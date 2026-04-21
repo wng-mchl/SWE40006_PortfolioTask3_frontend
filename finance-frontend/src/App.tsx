@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./styles/App.css";
+import "./styles/app.css";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import CashflowChart from "./components/CashflowBarChart";
