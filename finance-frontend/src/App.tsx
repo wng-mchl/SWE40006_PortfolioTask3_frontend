@@ -43,10 +43,6 @@ function App() {
       : acc - t.amount;
   }, 0);
 
-  const addTransaction = (transaction: Transaction) => {
-    setTransactions([...transactions, transaction]);
-  };
-
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add("dark");
@@ -54,12 +50,6 @@ function App() {
       document.body.classList.remove("dark");
     }
   }, [darkMode]);
-
-
-
-  const deleteTransaction = (id: number) => {
-    setTransactions(transactions.filter(t => t.id !== id));
-  };
 
   // handles transaction editing
   const startEdit = (t: Transaction) => {
@@ -71,19 +61,47 @@ function App() {
   const saveEdit = (id: number) => {
     setTransactions(transactions.map(t =>
       t.id === id
-        ? { ...t, name: editName, amount: parseFloat(editAmount) }
+        ? { ...t, name: editName, cost: parseFloat(editAmount) }
         : t
     ));
     setEditingId(null);
+  };
+
+  useEffect(() => {
+    fetch("/transactions")
+      .then(res => res.json())
+      .then(data => setTransactions(data));
+  }, []);
+
+  const addTransaction = async (transaction: Transaction) => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/transactions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(transaction)
+    });
+
+    const data = await res.json();
+    setTransactions(prev => [...prev, data]);
+  };
+
+  const deleteTransaction = async (id: number) => {
+    await fetch(`${import.meta.env.VITE_API_URL}/transactions/${id}`, {
+      method: "DELETE"
+    });
+
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/transactions`);
+    const data = await res.json();
+    setTransactions(data);
   };
 
 
   return (
     <div className="container">
       <div id="header">
-        {/* the noticeable change for high distinction task */}
-        <h1>Finance Tracker v1.1.0</h1> 
-        <button className="toggle" onClick={()  => setDarkMode(!darkMode)}>
+        <h1>Finance Tracker v1.1.0</h1>
+        <button className="toggle" onClick={() => setDarkMode(!darkMode)}>
           Toggle {darkMode ? "Light" : "Dark"} Mode
         </button>
       </div>
@@ -93,7 +111,7 @@ function App() {
           <SummaryCard title="Average Balance" value={total} />
 
           <SummaryCard title="Average Income per entry" value={avgIncome} />
-          
+
           <SummaryCard title="Average Expense per entry " value={avgExpense} />
         </div>
 
