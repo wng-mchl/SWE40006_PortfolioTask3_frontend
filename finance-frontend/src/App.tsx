@@ -100,7 +100,7 @@ function App() {
   return (
     <div className="container">
       <div id="header">
-        <h1>Finance Tracker v1.1.0</h1>
+        <h1>Finance Tracker v1.2.0</h1>
         <button className="toggle" onClick={() => setDarkMode(!darkMode)}>
           Toggle {darkMode ? "Light" : "Dark"} Mode
         </button>
