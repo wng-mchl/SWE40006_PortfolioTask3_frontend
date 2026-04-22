@@ -59,7 +59,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("/transactions")
+    fetch(`${import.meta.env.VITE_API_URL}/transactions`)
       .then(res => res.json())
       .then(data => setTransactions(data));
   }, []);
