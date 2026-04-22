@@ -58,15 +58,6 @@ function App() {
     setEditAmount(t.amount.toString());
   };
 
-  const saveEdit = (id: number) => {
-    setTransactions(transactions.map(t =>
-      t.id === id
-        ? { ...t, name: editName, cost: parseFloat(editAmount) }
-        : t
-    ));
-    setEditingId(null);
-  };
-
   useEffect(() => {
     fetch("/transactions")
       .then(res => res.json())
@@ -84,6 +75,31 @@ function App() {
 
     const data = await res.json();
     setTransactions(prev => [...prev, data]);
+  };
+
+  const saveEdit = async (id: number) => {
+    const updatedTransaction = {
+      name: editName,
+      amount: parseFloat(editAmount),
+      type: "Expense", // or keep original if you track it
+      date: new Date().toISOString().split("T")[0]
+    };
+
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/transactions/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updatedTransaction)
+    });
+
+    const data = await res.json();
+
+    setTransactions(prev =>
+      prev.map(t => (t.id === id ? data : t))
+    );
+
+    setEditingId(null);
   };
 
   const deleteTransaction = async (id: number) => {
